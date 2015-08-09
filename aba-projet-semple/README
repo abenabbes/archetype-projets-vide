@@ -1,0 +1,61 @@
+-> Ce projet utilise : 
+     - JSR 330, 
+     - Servelet 3, 
+     - Java 7
+     - Hibernate 4 : ORM = impléméntation de JPA
+     - JPA 2 : interface d'accés au données.
+     - Spring 3 : Pour IOC
+     
+-> Vous pouvez déployer ce projet sous JBoss As 7 ou Tomcat 7.
+
+-> Ce projet utilise une datasource de type JNDI (definie dans le serveur d'application). 
+
+	1 - Configurer de la datasource sous JBoss 7 :
+  		----> Modifier le fichier statdalone.xml (JBOSS_HOME/standalone/configuration) de la façon suivante :
+      
+       *) Ajout de datsource :
+         <datasource jndi-name="java:/comp/env/jdbc/abenabbes/abenabbesDS" pool-name="abenabbesDS" enabled="true" use-java-context="true">
+					 <connection-url>jdbc:mysql://localhost:3306/abenabbesProd</connection-url>
+					 <driver>mysqlDriver</driver>
+					 <security>
+						 <user-name>root</user-name>
+						 <password></password>
+					</security>
+		  </datasource>
+				
+       *) Ajout de driver :
+           <driver name="mysqlDriver" module="com.mysql">
+						 <driver-class>com.mysql.jdbc.Driver</driver-class>
+						 <xa-datasource-class>com.mysql.jdbc.jdbc2.optional.MysqlXADataSource</xa-datasource-class>
+		   </driver>
+
+		----> Ajouter dans le chemin JBOSS_HOME/modules/ un repertoire "com" dans lequel vous créez un autre repertoire
+       "mysql/main", dans ce dernier vous déposez le jar "mysql-connector-java-5.1.36.jar". Vous créer en suite dans le même répertoire
+       un fichier "module.xml" :
+          <module xmlns="urn:jboss:module:1.0" name="com.mysql">
+			  <resources>
+			    <resource-root path="mysql-connector-java-5.1.36.jar"/>
+			        <!-- Insert resources here -->
+			  </resources>
+			  <dependencies>
+			    <module name="javax.api"/>
+			    <module name="javax.transaction.api" />
+       			<module name="javax.servlet.api" optional="true" />
+			  </dependencies>
+			</module>
+			
+	----> Ajouter dans le fichier web.xml du projet ;
+		<resource-env-ref>
+	        <resource-env-ref-name>java:/comp/env/jdbc/abenabbes/abenabbesDS</resource-env-ref-name>
+	        <resource-env-ref-type>javax.sql.DataSource</resource-env-ref-type>
+   		</resource-env-ref>
+   		
+ 	2 - Configurer de la datasource sous Tomcat 7 :
+   		--> Ajouter dans le fichier server.xml (TOMCAT_HOME/conf/ )
+        <Resource name="jdbc/abenabbes/abenabbesDS" 
+			  auth="Container" type="javax.sql.DataSource"  
+              driverClassName="com.mysql.jdbc.Driver" 
+              url="jdbc:mysql://localhost:3306/abenabbesProd"  
+              username="root" password="" maxActive="20" maxIdle="10" maxWait="-1" />
+              
+   		--> Ajouter le connecteur mysql dans le repertoir lib de JBoss (TOMCAT_HOME/lib/ )

@@ -1,0 +1,204 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>aba.projet.exemple</groupId>
+  <artifactId>aba-projet-semple</artifactId>
+  <version>v-1.0.0.</version>
+  <packaging>war</packaging>
+  <name>aba-projet-semple</name>
+  <description>un archetype vide qui sera un exemple pour les autres projets</description>
+  
+   <properties>
+  	 <!-- Test -->
+  	 <junit.version>4.11</junit.version>
+  	 
+  	 <!-- JSF -->
+     <jsf.version>2.2.4</jsf.version>
+  	 <primefaces.version>5.0</primefaces.version>
+     <jsf-facelets.version>1.1.14</jsf-facelets.version>
+     
+     <!-- Servlets 3.0 et au JSP 2.2 -->
+     <javax.servlet-api>3.0.1</javax.servlet-api>
+     <javax.servlet.jsp-api>2.2.1</javax.servlet.jsp-api>
+     <jstl.version>1.2</jstl.version>
+    
+     <!-- spring -->
+     <spring.version>3.2.4.RELEASE</spring.version>
+     
+     <!-- hibernate -->
+     <hibernate.core.version>4.2.4.Final</hibernate.core.version>
+     <hibernate-entitymanager.version>4.2.4.Final</hibernate-entitymanager.version>
+     <hibernate.validator.version>5.0.1.Final</hibernate.validator.version>
+     <hibernate-jpa-2.0-api>1.0.1.Final</hibernate-jpa-2.0-api>
+     <jta.version>1.1</jta.version>
+     <!-- logger -->
+     <slf4j.version>1.6.1</slf4j.version>
+     <log4j.version>1.2.17</log4j.version>
+     
+     <!-- database -->
+     <h2.database.version>1.4.187</h2.database.version>
+     <mysql.version>5.1.36</mysql.version>
+     
+     <!-- mapping avec dozer -->
+     <dozer.version>5.5.1</dozer.version>
+     
+     <!-- autres -->
+     <java.version>1.7</java.version>
+  	 <servelet.api.version>2.5</servelet.api.version>
+  	 <encodage>UTF-8</encodage>
+     <common.collection.version></common.collection.version>
+     <ehcache.version>2.8.5</ehcache.version>
+     
+     <!-- plugins maven -->
+     <maven-compiler-plugin>3.3</maven-compiler-plugin>
+     <maven-war-plugin>2.6</maven-war-plugin>
+  </properties>
+  
+  <dependencies>
+  		<!-- ************** SPRING ************** -->
+  		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
+			<exclusions>
+			   <exclusion>
+			      <groupId>commons-logging</groupId>
+			      <artifactId>commons-logging</artifactId>
+			   </exclusion>
+			</exclusions>			
+		</dependency>
+  		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		
+  		<!-- ************** JPA/HIBERNATE ************** -->
+  		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${hibernate.core.version}</version>
+		</dependency>		
+		<dependency>
+			<groupId>org.hibernate.javax.persistence</groupId>
+			<artifactId>hibernate-jpa-2.0-api</artifactId>
+			<version>${hibernate-jpa-2.0-api}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>${hibernate-entitymanager.version}</version>
+		</dependency>
+		
+		<!-- dependances liées à hibernate et jpa -->
+		<dependency>
+	      <groupId>javax.transaction</groupId>
+	      <artifactId>jta</artifactId>
+	      <version>${jta.version}</version>
+	    </dependency>
+	    
+  		<!-- ************** Servlets 3.0 et au JSP 2.2 (Tomcat 7, Jetty 8, Java EE 6) ************** -->
+  		<dependency>
+		   <groupId>javax.servlet</groupId>
+		   <artifactId>javax.servlet-api</artifactId>
+		   <version>${javax.servlet-api}</version>
+		   <scope>provided</scope>
+		</dependency>
+		<dependency>
+		   <groupId>javax.servlet.jsp</groupId>
+		   <artifactId>javax.servlet.jsp-api</artifactId>
+		   <version>${javax.servlet.jsp-api}</version>
+		   <scope>provided</scope>
+		</dependency>
+		<dependency>
+		   <groupId>jstl</groupId>
+		   <artifactId>jstl</artifactId>
+		   <version>${jstl.version}</version>
+		</dependency>
+  		<!-- ************** TEST ************** -->
+	    <dependency>
+	      <groupId>junit</groupId>
+	      <artifactId>junit</artifactId>
+	      <version>${junit.version}</version>
+	      <scope>test</scope>
+	    </dependency>
+	    <!-- ************** LOGGER ************** -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${slf4j.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>${log4j.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        
+        <!-- ************** Database ************** -->
+        <dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql.version}</version>
+		</dependency>
+        
+  </dependencies>
+  
+  <build>
+    <finalName>aba-projet-semple</finalName>
+    
+     <plugins>
+	      <!-- plugin de compilation utilisation de java 7-->
+	      <plugin>
+	        <groupId>org.apache.maven.plugins</groupId>
+	        <artifactId>maven-compiler-plugin</artifactId>
+	        <version>${maven-compiler-plugin}</version>
+	        <configuration>
+	          <source>${java.version}</source>
+	          <target>${java.version}</target>
+	          <encoding>${encodage}</encoding>  
+	        </configuration>
+	      </plugin>
+	      <!-- Pour configurer la production du « war » -->
+	      <plugin>
+	       <groupId>org.apache.maven.plugins</groupId>
+		   <artifactId>maven-war-plugin</artifactId>
+		   <version>${maven-war-plugin}</version>
+		   <configuration>
+		      <failOnMissingWebXml>false</failOnMissingWebXml>
+		   </configuration>
+		</plugin>
+      </plugins>
+  </build>
+</project>
