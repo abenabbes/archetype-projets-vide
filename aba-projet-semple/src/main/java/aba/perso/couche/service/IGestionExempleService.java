@@ -1,7 +1,10 @@
 package aba.perso.couche.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
+import aba.perso.couche.entites.ExempleEntite;
 import aba.perso.couche.vo.ExempleVo;
 
 /**
@@ -10,7 +13,6 @@ import aba.perso.couche.vo.ExempleVo;
  * @author ali
  *
  */
-@Service
 public interface IGestionExempleService {
 
 	/**
@@ -18,5 +20,11 @@ public interface IGestionExempleService {
 	 * @param exemple l'objet
 	 * @return un objet exemple
 	 */
-	ExempleVo ajouterExemple(ExempleVo exemple);
+	ExempleEntite ajouterExemple(ExempleVo exemple);
+	
+	/**
+	 * Methode service pour lister tous les objets exemple existants.
+	 * @return une liste de l'objet Exemple.
+	 */
+	List<ExempleEntite> rechercherTous();
 }

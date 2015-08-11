@@ -10,7 +10,8 @@
    <properties>
   	 <!-- Test -->
   	 <junit.version>4.11</junit.version>
-  	 
+  	 <spring.test.version>3.2.4.RELEASE</spring.test.version>
+  	
   	 <!-- JSF -->
      <jsf.version>2.2.4</jsf.version>
   	 <primefaces.version>5.0</primefaces.version>
@@ -146,6 +147,11 @@
 	      <version>${junit.version}</version>
 	      <scope>test</scope>
 	    </dependency>
+	    <dependency> 
+            <groupId>org.springframework</groupId> 
+            <artifactId>spring-test</artifactId> 
+            <version>${spring.test.version}</version> 
+        </dependency>
 	    <!-- ************** LOGGER ************** -->
         <dependency>
             <groupId>org.slf4j</groupId>

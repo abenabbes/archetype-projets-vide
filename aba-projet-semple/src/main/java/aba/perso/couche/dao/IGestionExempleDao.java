@@ -1,7 +1,9 @@
 package aba.perso.couche.dao;
 
-import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
+import aba.perso.couche.entites.ExempleEntite;
 import aba.perso.couche.vo.ExempleVo;
 
 /**
@@ -10,7 +12,6 @@ import aba.perso.couche.vo.ExempleVo;
  * @author ali
  *
  */
-@Repository
 public interface IGestionExempleDao {
 
 	/**
@@ -19,5 +20,12 @@ public interface IGestionExempleDao {
 	 * @param exemple l'objet
 	 * @return un objet exemple
 	 */
-	ExempleVo ajouterExemple(ExempleVo exemple);
+	ExempleEntite ajouterExemple(ExempleVo exemple);
+	
+	/**
+	 * Methode persistance pour lister tous les objets dans la base de données.
+	 * @return une liste de l'objet Exemple.
+	 */
+	List<ExempleEntite> rechercherTous();
+	
 }

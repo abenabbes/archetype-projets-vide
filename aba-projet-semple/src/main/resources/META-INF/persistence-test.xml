@@ -4,17 +4,16 @@
 			xsi:schemaLocation="http://java.sun.com/xml/ns/persistence 
 								http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
 	
-	<persistence-unit name="abbenabbes-production_PU" transaction-type="JTA">
+	<persistence-unit name="abbenabbes-developpement_PU" transaction-type="RESOURCE_LOCAL">
 		 <provider>org.hibernate.ejb.HibernatePersistence</provider> 
-	     <jta-data-source>java:/comp/env/jdbc/abenabbes/abenabbesDS</jta-data-source>
 	     <class>aba.perso.couche.entites.ExempleEntite</class>
 	      <properties>
 	        <!-- Properties for Hibernate (default provider for JBoss AS) -->
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
-<!--             <property name="hibernate.hbm2ddl.auto" value="create-drop" /> -->
-            <property name ="hibernate.show_sql" value = "false" />
-            <property name="hibernate.format_sql" value="false" />
-            <property name="hibernate.use_sql_comments" value="salse"/>
+            <property name="hibernate.hbm2ddl.auto" value="create-drop" />
+            <property name ="hibernate.show_sql" value = "true" />
+            <property name="hibernate.format_sql" value="true" />
+            <property name="hibernate.use_sql_comments" value="true"/>
             
           </properties>
 	</persistence-unit>
