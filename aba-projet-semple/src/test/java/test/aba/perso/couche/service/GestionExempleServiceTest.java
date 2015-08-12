@@ -8,7 +8,6 @@ import static org.junit.Assert.*;
 import java.util.Date;
 import java.util.List;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,12 +16,12 @@ import org.springframework.test.context.ContextConfiguration;
 
 import test.aba.perso.couche.utils.AbstractTest;
 import aba.perso.couche.dao.GestionExempleDaoImpl;
-import aba.perso.couche.dao.IGestionExempleDao;
 import aba.perso.couche.entites.ExempleEntite;
 import aba.perso.couche.service.IGestionExempleService;
 import aba.perso.couche.vo.ExempleVo;
 
 /**
+ * 
  * @author ali
  *
  */
@@ -39,6 +38,12 @@ public class GestionExempleServiceTest extends AbstractTest{
 	
 	
 	//============= TESTS
+	
+	/**
+	 * CAS NOMINAL.<br>
+	 * Test du service d'ajout d'un objet exemple dans la base de données.<br>
+	 * RESULTAT : En retour un objet non null.
+	 */
 	@Test
 	public void testAjouterExempleCasNominal(){
 		LOGGER.debug("Debut de test de la methode persistance jouterExemple");
@@ -50,7 +55,11 @@ public class GestionExempleServiceTest extends AbstractTest{
 		
 	}
 	
-	
+	/**
+	 * CAS NOMINAL.<br>
+	 * Test du service de recherche de tous les objets exemple existent dans la base de données.<br>
+	 * RESULTAT : une liste de taille 3.
+	 */
 	@Test
 	public void testRechercherTousCasNominal(){
 		LOGGER.debug("Debut de test de la methode persistance rechercherTous");
@@ -64,6 +73,11 @@ public class GestionExempleServiceTest extends AbstractTest{
 	}
 	
 	//=============== Bouchons
+	
+	/**
+	 * Un objet valeur Exemple.
+	 * @return l'objet Exemple
+	 */
 	private ExempleVo getExempleVo(){
 		ExempleVo bouchon = new ExempleVo();
 		bouchon.setNom("Exemple_Test_1");
@@ -71,13 +85,4 @@ public class GestionExempleServiceTest extends AbstractTest{
 		return bouchon;
 	}
 	
-	//
-	
-	private ExempleEntite getExempleEntite(){
-		ExempleEntite bouchon = new ExempleEntite();
-		bouchon.setNom("Exemple_Test_1");
-		bouchon.setDate(new Date());
-//		bouchon.setId(111111111L);
-		return bouchon;
-	}
 }

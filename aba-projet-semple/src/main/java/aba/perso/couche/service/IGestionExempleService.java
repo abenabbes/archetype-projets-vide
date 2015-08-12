@@ -2,7 +2,6 @@ package aba.perso.couche.service;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
 
 import aba.perso.couche.entites.ExempleEntite;
 import aba.perso.couche.vo.ExempleVo;

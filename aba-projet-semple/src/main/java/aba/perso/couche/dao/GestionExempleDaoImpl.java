@@ -13,7 +13,6 @@ import javax.persistence.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import aba.perso.couche.entites.ExempleEntite;
 import aba.perso.couche.vo.ExempleVo;
