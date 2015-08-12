@@ -1,19 +1,19 @@
 ############################## Archetype de projet vide ###############################
 
 -> Ce projet utilise : 
-     - JSR 330, 
+     - La JSR 330, 
      - Servelet 3, 
      - Java 7
-     - Hibernate 4 : ORM = implÈmÈntation de JPA
-     - JPA 2 : interface d'accÈs au donnÈes.
+     - Hibernate 4 : ORM = impl√©m√©ntation de JPA
+     - JPA 2 : interface d'acc√©s au donn√©es.
      - Spring 3 : Pour IOC
      
--> Vous pouvez dÈployer ce projet sous JBoss As 7 ou Tomcat 7.
+-> Vous pouvez d√©ployer ce projet sous JBoss As 7 ou Tomcat 7.
 
 -> Ce projet utilise une datasource de type JNDI (definie dans le serveur d'application). 
 
 	1 - Configurer de la datasource sous JBoss 7 :
-  		----> Modifier le fichier statdalone.xml (JBOSS_HOME/standalone/configuration) de la faÁon suivante :
+  		----> Modifier le fichier statdalone.xml (JBOSS_HOME/standalone/configuration) de la fa√ßon suivante :
       
        *) Ajout de datsource :
          <datasource jndi-name="java:/comp/env/jdbc/abenabbes/abenabbesDS" pool-name="abenabbesDS" enabled="true" use-java-context="true">
@@ -31,8 +31,8 @@
 						 <xa-datasource-class>com.mysql.jdbc.jdbc2.optional.MysqlXADataSource</xa-datasource-class>
 		   </driver>
 
-		----> Ajouter dans le chemin JBOSS_HOME/modules/ un repertoire "com" dans lequel vous crÈez un autre repertoire
-       "mysql/main", dans ce dernier vous dÈposez le jar "mysql-connector-java-5.1.36.jar". Vous crÈer en suite dans le mÍme rÈpertoire
+		----> Ajouter dans le chemin JBOSS_HOME/modules/ un repertoire "com" dans lequel vous cr√©ez un autre repertoire
+       "mysql/main", dans ce dernier vous d√©posez le jar "mysql-connector-java-5.1.36.jar". Vous cr√©er en suite dans le m√™me r√©pertoire
        un fichier "module.xml" :
           <module xmlns="urn:jboss:module:1.0" name="com.mysql">
 			  <resources>
