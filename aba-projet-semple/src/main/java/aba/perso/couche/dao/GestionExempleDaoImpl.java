@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.slf4j.Logger;
@@ -15,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import aba.perso.couche.entites.ExempleEntite;
+import aba.perso.couche.generic.GenericDAOImpl;
 import aba.perso.couche.vo.ExempleVo;
 
 /**
@@ -26,15 +26,15 @@ import aba.perso.couche.vo.ExempleVo;
  *
  */
 @Repository
-public class GestionExempleDaoImpl implements IGestionExempleDao {
+public class GestionExempleDaoImpl extends GenericDAOImpl<ExempleEntite> implements IGestionExempleDao {
 
 	//============= ATTRIBUTS
 	/** Logger */
 	private static Logger LOGGER = LoggerFactory.getLogger(GestionExempleDaoImpl.class);
 			
 	/** Définition du gestionnaire d'entités */
-	@PersistenceContext
-	private EntityManager entityManager;
+//	@PersistenceContext
+//	private EntityManager entityManager;
 
 	//============= METHODES
 	@Override

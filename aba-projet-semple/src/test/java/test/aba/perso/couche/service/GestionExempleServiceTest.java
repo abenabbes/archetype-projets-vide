@@ -21,7 +21,8 @@ import aba.perso.couche.service.IGestionExempleService;
 import aba.perso.couche.vo.ExempleVo;
 
 /**
- * 
+ * Classe de test de la couche service.<br>
+ * -------------------------------------<br>
  * @author ali
  *
  */

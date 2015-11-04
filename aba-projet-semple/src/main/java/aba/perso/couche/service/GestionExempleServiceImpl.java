@@ -11,8 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import aba.perso.couche.dao.IGestionExempleDao;
 import aba.perso.couche.entites.ExempleEntite;
+import aba.perso.couche.metier.IGestionExempleMetier;
 import aba.perso.couche.vo.ExempleVo;
 
 
@@ -31,20 +31,24 @@ public class GestionExempleServiceImpl implements IGestionExempleService {
 	
 	/** Appel à la couche DAO*/
 	@Autowired
-	private IGestionExempleDao gestionExempleDao;
+	private IGestionExempleMetier gestionExempleMetier;
 
 	//============= METHODES
 	@Override
 	@Transactional
 	public ExempleEntite ajouterExemple(ExempleVo exemple) {
 		LOGGER.debug("DEBUT sercive [ajouterExemple]");
-		return gestionExempleDao.ajouterExemple(exemple);
+		return gestionExempleMetier.ajouterExemple(exemple);
 	}
 
 	@Override
 	public List<ExempleEntite> rechercherTous() {
 		LOGGER.debug("DEBUT sercive [rechercherTous]");
-		return gestionExempleDao.rechercherTous();
+		return gestionExempleMetier.listerToutesEntite();
+	}
+
+	public void setGestionExempleMetier(IGestionExempleMetier gestionExempleMetier) {
+		this.gestionExempleMetier = gestionExempleMetier;
 	}
 	
 

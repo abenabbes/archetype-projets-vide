@@ -15,7 +15,7 @@ import aba.perso.couche.vo.ExempleVo;
 public interface IGestionExempleService {
 
 	/**
-	 * Methode service d'ajout d'un objet.<br>
+	 * Methode service de mise à jour de l'objet.<br>
 	 * @param exemple l'objet
 	 * @return un objet exemple
 	 */
