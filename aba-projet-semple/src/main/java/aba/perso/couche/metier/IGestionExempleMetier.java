@@ -16,6 +16,8 @@ import aba.perso.couche.vo.ExempleVo;
  */
 public interface IGestionExempleMetier {
 
+	
+	//--------------------------FIN NOV
 	/**
 	 * Methode service de mise à jour de l'objet.<br>
 	 * @param exemple l'objet

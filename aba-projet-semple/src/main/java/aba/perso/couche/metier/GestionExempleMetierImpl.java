@@ -33,6 +33,7 @@ public class GestionExempleMetierImpl implements IGestionExempleMetier {
 	@Autowired
 	private IGestionExempleDao gestionExempleDao;
 	
+	//============= METHODES
 	@Override
 	public ExempleEntite miseAJourExemple(ExempleVo exemple) {
 		LOGGER.debug("DEBUT de metier [miseAJourExemple] - parametre d'entres un objet d'id = {}", exemple.getId());
@@ -72,7 +73,7 @@ public class GestionExempleMetierImpl implements IGestionExempleMetier {
 		return gestionExempleDao.listerToutesEntite();
 	}
 
-	//GETTER && SETTER
+	//================= GETTER && SETTER
 	public void setGestionExempleDao(IGestionExempleDao gestionExempleDao) {
 		this.gestionExempleDao = gestionExempleDao;
 	}
