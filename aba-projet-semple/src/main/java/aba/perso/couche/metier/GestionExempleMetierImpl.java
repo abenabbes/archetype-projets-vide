@@ -27,7 +27,7 @@ public class GestionExempleMetierImpl implements IGestionExempleMetier {
 
 	//============= ATTRIBUTS
 	/** Logger */
-	private static Logger LOGGER = LoggerFactory.getLogger(GestionExempleServiceImpl.class);
+	private static Logger LOGGER = LoggerFactory.getLogger(GestionExempleMetierImpl.class);
 	
 	/** Appel à la couche DAO*/
 	@Autowired
@@ -47,7 +47,8 @@ public class GestionExempleMetierImpl implements IGestionExempleMetier {
 		entiteAMJ.setNom(exemple.getNom());
 		
 		//Retour 
-		ExempleEntite entiteRetour = gestionExempleDao.miseAJourEntite(entiteAMJ);
+		ExempleEntite entiteRetour = null;
+//		ExempleEntite entiteRetour = gestionExempleDao.miseAJourEntite(entiteAMJ);
 		
 		
 		LOGGER.debug("FIN de metier [miseAJourExemple]");
@@ -65,12 +66,14 @@ public class GestionExempleMetierImpl implements IGestionExempleMetier {
 
 	@Override
 	public ExempleEntite ajouterExemple(ExempleVo exemple) {
-		return gestionExempleDao.ajouterExemple(exemple);
+//		return gestionExempleDao.ajouterExemple(exemple);
+		return null;
 	}
 
 	@Override
 	public List<ExempleEntite> listerToutesEntite() {
-		return gestionExempleDao.listerToutesEntite();
+//		return gestionExempleDao.listerToutesEntite();
+		return null;
 	}
 
 	//================= GETTER && SETTER

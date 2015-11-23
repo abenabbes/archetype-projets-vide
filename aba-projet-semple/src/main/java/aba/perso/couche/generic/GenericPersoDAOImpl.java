@@ -3,12 +3,12 @@
  */
 package aba.perso.couche.generic;
 
+import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -17,15 +17,15 @@ import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import aba.perso.couche.entites.ExempleEntite;
 import aba.perso.couche.exceptions.DAOException;
+import aba.perso.couche.utils.Constantes;
 
 /**
- * Implémentation JPA de l'interface générique DAO.<br>
+ * Implémentation JPA de l'interface générique DAO de toutes les entités.<br>
  * @author ali
  *
  */
-public class GenericPersoDAOImpl<E, K> implements IGenericPersoDAO<E, K> {
+public abstract class GenericPersoDAOImpl<E, K extends Serializable> implements IGenericPersoDAO<E, K> {
 
 	//============= ATTRIBUTS
 	/** Logger */
@@ -36,7 +36,7 @@ public class GenericPersoDAOImpl<E, K> implements IGenericPersoDAO<E, K> {
 	protected EntityManager entityManager;
 	
 	/** Entite typé */
-	private Class<E> entityBean;
+	protected Class<E> entityBean;
 	 
 	/**
 	 * Constructeur par défaut
@@ -61,7 +61,7 @@ public class GenericPersoDAOImpl<E, K> implements IGenericPersoDAO<E, K> {
 		List<E> listeEntiteRetour = null;
 		
 		//Requete
-		final String SQL = "SELECT e FROM "+ this.entityBean.getName() + " e ORDER by e.id";
+		final String SQL = " SELECT entity FROM "+ this.entityBean.getName() + " AS entity ORDER by entity.id";
 	    
 		TypedQuery<E> query = (TypedQuery<E>) this.entityManager.createQuery(SQL);
 		
@@ -77,7 +77,7 @@ public class GenericPersoDAOImpl<E, K> implements IGenericPersoDAO<E, K> {
 	}
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<E> listerEntitesAvecParamsGen(String requete, Map<String, Object> parametres) throws DAOException {
+	public List<E> listerEntitesAvecRequeteEtParamsGen(String requete, Map<String, Object> parametres) throws DAOException {
 
 		//Requête
 		Query query = this.entityManager.createQuery(requete);
@@ -93,21 +93,40 @@ public class GenericPersoDAOImpl<E, K> implements IGenericPersoDAO<E, K> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public E rechercheEntiteParIdGen(K id) throws DAOException {
-		//Requete
-		final String SQL = "SELECT e FROM "+ this.entityBean.getName() + " e ORDER by e.id";
-		//Requête
-		Query query = this.entityManager.createQuery(SQL);
 		
-		//Retour
+		//vérification des paramétres d'entrées
+		if(id == null)
+			throw new DAOException("L'identifiant ne doit pas étre null");
+		
+		//Requete
+		final String SQL = "SELECT e FROM "+ this.entityBean.getName() + " AS e WHERE e.id = :id";
+		
+		//Requête typer JPA2
+		TypedQuery<E> query = (TypedQuery<E>) this.entityManager.createQuery(SQL);
+		query.setParameter(Constantes.PARAM_ID, id);
+		
+		//Retour && resultat de la requête
 		List<E> results = query.getResultList();
 		
         if (results.isEmpty()) 
         	return null;
         else if (results.size() == 1) 
         	return (E) results.get(0);
-            throw new NonUniqueResultException();
+            throw new DAOException("Il existe plusqu'un seule élément dans la base");
 	}
 	
+	@Override
+	public E ajouterEntiteGen(E entity) throws DAOException {
+		
+		if(entity == null)
+			throw new DAOException("L'objet en entré à persister ne doit pas être NULL");
+		
+		// persist
+		this.entityManager.persist(entity);
+		LOGGER.debug("Persistance de l'entité avec success");
+		
+		return entity;
+	}
 	// ============== GETTERS et SETTERS
 	public EntityManager getEntityManager() {
 		return entityManager;

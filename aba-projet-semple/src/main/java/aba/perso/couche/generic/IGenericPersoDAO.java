@@ -10,7 +10,7 @@ import aba.perso.couche.exceptions.DAOException;
 
 
 /**
- * Interface générique de définition d'un DAO.<br>
+ * Interface générique de définition d'un DAO pour toutes les entitées.<br>
  * @author ali
  *
  */
@@ -27,13 +27,14 @@ public interface IGenericPersoDAO<E, K> {
 	  
 	 /**
 	  * ABA ____NOV.<br>
-	  * Recherche de l'ensemble des entités sans paramétres.<br>
+	  * 
+	  * Recherche de l'ensemble des entités avec une requete SQL et des paramétres.<br>
 	  * @param requete la requete SQL.
 	  * @param parametres les paramétres de la requête.
 	  * @return La liste des entités.
 	  * @throws DAOException exception.
 	  */
-	  public List<E> listerEntitesAvecParamsGen(final String requete, final Map<String, Object> parametres) throws DAOException;
+	  public List<E> listerEntitesAvecRequeteEtParamsGen(final String requete, final Map<String, Object> parametres) throws DAOException;
 	  
 	  /**
 	   * Recherche d'une entité par son identifiant
@@ -42,6 +43,14 @@ public interface IGenericPersoDAO<E, K> {
 	   * @return Entité
 	   */
 	  public E rechercheEntiteParIdGen(final K id) throws DAOException ;
+	  
+	  /**
+	   * Ajouter dans la base une entité.
+	   * @param entity l'entité à ajouter.
+	   * @return l'entité.
+	   * @throws DAOException une exception.
+	   */
+	  public E ajouterEntiteGen(final E entity) throws DAOException ;
 	 
 	  //---------------------------------------------
 	 

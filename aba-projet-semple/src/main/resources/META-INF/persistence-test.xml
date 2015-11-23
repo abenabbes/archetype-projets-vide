@@ -7,6 +7,7 @@
 	<persistence-unit name="abbenabbes-developpement_PU" transaction-type="RESOURCE_LOCAL">
 		 <provider>org.hibernate.ejb.HibernatePersistence</provider> 
 	     <class>aba.perso.couche.entites.ExempleEntite</class>
+	     <class>aba.perso.couche.entites.BaseEntity</class>
 	      <properties>
 	        <!-- Properties for Hibernate (default provider for JBoss AS) -->
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />

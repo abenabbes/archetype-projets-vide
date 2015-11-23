@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -23,17 +24,15 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name="EXEMPLE")
-public class ExempleEntite implements Serializable {
+public class ExempleEntite extends BaseEntity<Long>  {
 
 	//=============== ATTRIBUTS
-	/** Serializable. */
-	private static final long serialVersionUID = -393441468393654330L;
 	
 	/** Identifiant technique de l'objet.*/
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "ID", unique=true , nullable = false, updatable = false)
-	private Long id;
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.AUTO)
+//    @Column(name = "ID", unique=true , nullable = false, updatable = false)
+//	private Long id;
 	
 	/** Nom de l'objet.*/
 	@Column(name = "NOM")
@@ -43,15 +42,12 @@ public class ExempleEntite implements Serializable {
 	@Column(name = "DATE_OBJET")
 	@Temporal(TemporalType.DATE)
 	private Date date;
+	
+	/** Date de l'objet.*/
+	@Column(name = "DATE_INSERT")
+	@Temporal(TemporalType.DATE)
+	private Date dateInsert;
 
-	//=============== GETTERS && SETTERS
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public String getNom() {
 		return nom;
@@ -69,10 +65,18 @@ public class ExempleEntite implements Serializable {
 		this.date = date;
 	}
 
-	//=============== ToString/HashCode/Equals
+	public Date getDateInsert() {
+		return dateInsert;
+	}
+
+	public void setDateInsert(Date dateInsert) {
+		this.dateInsert = dateInsert;
+	}
+
 	@Override
 	public String toString() {
-		return "ExempleVo [id=" + id + ", nom=" + nom + ", date=" + date + "]";
+		return "ExempleEntite [nom=" + nom + ", date=" + date + ", dateInsert="
+				+ dateInsert + "]";
 	}
 
 	@Override
@@ -80,7 +84,8 @@ public class ExempleEntite implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((date == null) ? 0 : date.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result
+				+ ((dateInsert == null) ? 0 : dateInsert.hashCode());
 		result = prime * result + ((nom == null) ? 0 : nom.hashCode());
 		return result;
 	}
@@ -99,10 +104,10 @@ public class ExempleEntite implements Serializable {
 				return false;
 		} else if (!date.equals(other.date))
 			return false;
-		if (id == null) {
-			if (other.id != null)
+		if (dateInsert == null) {
+			if (other.dateInsert != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!dateInsert.equals(other.dateInsert))
 			return false;
 		if (nom == null) {
 			if (other.nom != null)
@@ -110,6 +115,14 @@ public class ExempleEntite implements Serializable {
 		} else if (!nom.equals(other.nom))
 			return false;
 		return true;
+	}
+	
+	/**
+	 * Listener.
+	 */
+	@PrePersist
+	public void onCreate(){
+		this.dateInsert = new Date();
 	}
 
 }

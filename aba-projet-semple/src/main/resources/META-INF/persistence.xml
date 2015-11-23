@@ -8,6 +8,7 @@
 		 <provider>org.hibernate.ejb.HibernatePersistence</provider> 
 	     <jta-data-source>java:/comp/env/jdbc/abenabbes/abenabbesDS</jta-data-source>
 	     <class>aba.perso.couche.entites.ExempleEntite</class>
+	     <class>aba.perso.couche.entites.BaseEntity</class>
 	      <properties>
 	        <!-- Properties for Hibernate (default provider for JBoss AS) -->
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
