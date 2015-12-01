@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -16,6 +17,7 @@ import javax.persistence.TypedQuery;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.transaction.annotation.Transactional;
 
 import aba.perso.couche.exceptions.DAOException;
 import aba.perso.couche.utils.Constantes;
@@ -25,7 +27,7 @@ import aba.perso.couche.utils.Constantes;
  * @author ali
  *
  */
-public abstract class GenericPersoDAOImpl<E, K extends Serializable> implements IGenericPersoDAO<E, K> {
+public class GenericPersoDAOImpl<E, K extends Serializable> implements IGenericPersoDAO<E, K> {
 
 	//============= ATTRIBUTS
 	/** Logger */
@@ -73,8 +75,10 @@ public abstract class GenericPersoDAOImpl<E, K extends Serializable> implements 
 	    	LOGGER.debug("Aucun élément trouver dans la base");
 	    	return listeEntiteRetour;
 	    }
+	    LOGGER.debug("Récupération d'une liste de [{}] élément(s)", listeEntiteRetour != null ? listeEntiteRetour.size() : 0);
 	    return listeEntiteRetour;
 	}
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<E> listerEntitesAvecRequeteEtParamsGen(String requete, Map<String, Object> parametres) throws DAOException {
@@ -113,10 +117,11 @@ public abstract class GenericPersoDAOImpl<E, K extends Serializable> implements 
         else if (results.size() == 1) 
         	return (E) results.get(0);
             throw new DAOException("Il existe plusqu'un seule élément dans la base");
+         
 	}
 	
 	@Override
-	public E ajouterEntiteGen(E entity) throws DAOException {
+	public void ajouterEntiteGen(E entity) throws DAOException {
 		
 		if(entity == null)
 			throw new DAOException("L'objet en entré à persister ne doit pas être NULL");
@@ -125,7 +130,76 @@ public abstract class GenericPersoDAOImpl<E, K extends Serializable> implements 
 		this.entityManager.persist(entity);
 		LOGGER.debug("Persistance de l'entité avec success");
 		
-		return entity;
+	}
+	@Override
+	public E miseAJourEntiteGen(E entity, K id) {
+		if(entity == null)
+			throw new DAOException("L'objet en entré à modifier ne doit pas être NULL");
+
+		//Verifier l'existance de l'entité dans la base
+		final E isExiste = this.entityManager.find(entityBean, id);
+		
+		if(isExiste == null) 
+			return null ;
+		//Retour 
+		E entityRetour = this.entityManager.merge(entity);
+		return entityRetour;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Transactional
+	@Override
+	public Boolean supprimerEntite(K id) {
+		// Retour
+		Boolean isDelete = Boolean.TRUE;
+		
+		if(id == null)
+			throw new DAOException("L'identifiant de l'entité est absent");
+		
+		//Vérifier si l'entité existe dans la base
+		E isExist = rechercheEntiteParIdGen(id);
+        
+		if(isExist == null){
+			isDelete = 	Boolean.FALSE;
+			LOGGER.debug("Impossible de supprimé, l'entité n'exist pas dans la base");
+		}
+		
+		//Requete 
+		String SQL = "DELETE FROM "+ this.entityBean.getName() + " WHERE id=:id";
+		TypedQuery<E> query = (TypedQuery<E>) this.entityManager.createQuery(SQL);
+		query.setParameter(Constantes.PARAM_ID, id);
+		
+		int delete = query.executeUpdate();
+		
+		if(delete >= 1){
+			isDelete = 	Boolean.TRUE;
+		}
+		return isDelete;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public E rechercheEntiteParNamedQueryEtParIdGen(String NameQuery,
+			Map<String, Object> parametres) throws DAOException {
+
+		//Requête
+		TypedQuery<E> query = (TypedQuery<E>) this.entityManager.createNamedQuery(NameQuery);
+				
+		//Parcourir le map de parametre pour setter les valeurs.
+		for (String param : parametres.keySet()) {
+			query.setParameter(param, parametres.get(param));
+		}
+		
+		E rsultatnt = null;
+		try {
+			//Execute
+			rsultatnt = query.getSingleResult();
+		} catch (NonUniqueResultException e) {
+			LOGGER.error("ERREOR : Il existe plusqu'un élément dans la base");
+			LOGGER.error("ERREOR : " , e.getMessage());
+		}
+		
+		return rsultatnt;
 	}
 	// ============== GETTERS et SETTERS
 	public EntityManager getEntityManager() {

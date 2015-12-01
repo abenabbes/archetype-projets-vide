@@ -20,13 +20,23 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @RunWith(SpringJUnit4ClassRunner.class) 
 @TestExecutionListeners(value = DependencyInjectionTestExecutionListener.class)
-@TransactionConfiguration(defaultRollback=true, transactionManager="transactionManager")
+@TransactionConfiguration(defaultRollback = true, transactionManager="transactionManager")
 @Transactional
 public abstract class AbstractTest {
 	
 	/**Logger de la classe.*/
 	protected static final Logger log = Logger.getLogger(AbstractTest.class);
 	
+	/** Message qui concatène l'ensemble des résultats des tests. A afficher à la fin des tests. */
+	protected static String resultatsGeneralTests = "";
+
+    /**
+     * @param resultatsGeneralTests
+     *            the resultatsGeneralTests to set
+     */
+	protected static final void setResultatsGeneralTests(final String resultatsTests) {
+        resultatsGeneralTests += resultatsTests + "\n";
+    }
 	/**
 	 * Méthode lancé avant les tests de la classe.
 	 */
@@ -44,9 +54,9 @@ public abstract class AbstractTest {
 	 */
 	@AfterClass
 	public static void tearDown() {
-		log.debug("---------------------------------------\n");
-		log.debug("------------ FIN DES TEST JUNIT -----------\n");
-		log.debug("---------------------------------------\n");
+		log.debug("---------------------------------------------------------------\n");
+		log.debug("------------ Résultat : \n" + resultatsGeneralTests+  "--------\n");
+		log.debug("---------------------------------------------------------------\n");
 	}
 	   
 

@@ -3,18 +3,18 @@
  */
 package aba.perso.couche.entites;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import aba.perso.couche.utils.Constantes;
 
 /**
  * l'entite du projet pour les tests.<br>
@@ -24,15 +24,25 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name="EXEMPLE")
+@NamedQueries(value = { 
+		@NamedQuery(name = Constantes.QUERY_FIND_ONE_ENTITY,//
+				    query = "SELECT ex FROM ExempleEntite ex WHERE ex.id = :id") 
+		})
 public class ExempleEntite extends BaseEntity<Long>  {
 
 	//=============== ATTRIBUTS
+	/**
+	 * Serialisation.
+	 */
+	private static final long serialVersionUID = 6106934278342416789L;
+
 	
 	/** Identifiant technique de l'objet.*/
 //	@Id
 //	@GeneratedValue(strategy = GenerationType.AUTO)
 //    @Column(name = "ID", unique=true , nullable = false, updatable = false)
 //	private Long id;
+	
 	
 	/** Nom de l'objet.*/
 	@Column(name = "NOM")

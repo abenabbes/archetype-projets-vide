@@ -9,11 +9,10 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,11 +25,11 @@ import aba.perso.couche.dao.GestionExempleDaoImpl;
 import aba.perso.couche.dao.IGestionExempleDao;
 import aba.perso.couche.entites.ExempleEntite;
 import aba.perso.couche.exceptions.DAOException;
-import aba.perso.couche.vo.ExempleVo;
+import aba.perso.couche.utils.Constantes;
 
 /**
  * Classe de test de la couche persistance.<br>
- * -------------------------------------<br>
+ * --------------------------------------------<br>
  * @author ali
  *
  */
@@ -41,39 +40,9 @@ public class GestionExempleDaoImplTest extends AbstractTest{
 	/** Logger */
 	private static Logger LOGGER = LoggerFactory.getLogger(GestionExempleDaoImpl.class);
 	
-	/** Message qui concatène l'ensemble des résultats des tests. A afficher à la fin des tests. */
-    private static String resultatsGeneralTests = "";
-
-    /**
-     * @param resultatsGeneralTests
-     *            the resultatsGeneralTests to set
-     */
-    public static final void setResultatsGeneralTests(final String resultatsTests) {
-        resultatsGeneralTests += resultatsTests + "\n";
-    }
-	
 	/** Appel à la couche DAO.*/
 	@Autowired
 	private IGestionExempleDao gestionExempleDao;
-
-//	@Before
-	public void avantMethode() {
-		log.debug("---------------------------------------\n");
-		log.debug("---------- DEBUT ---------\n");
-		log.debug("---------------------------------------\n");
-		
-	}
-	   
-	 
-	/**
-	 * Méthode lancé après les tests de la classe.
-	 */
-//	@After
-	public void apresMethode() {
-		log.debug("---------------------------------------\n");
-		log.debug("------------ resultatsGeneralTests -----------\n");
-		log.debug("---------------------------------------\n");
-	}
 
 	/**
 	 * CAS NOMINAL.<br>
@@ -82,13 +51,13 @@ public class GestionExempleDaoImplTest extends AbstractTest{
 	 */
 	@Test
 	public void testListerEntitesSansParamsGenCasNominal(){
-		String nomMethode = "listerEntitesSansParamsGen";
+		String nomMethode = "testListerEntitesSansParamsGenCasNominal";
         log.debug("\n\n---------- ### Test Debut : " + nomMethode + "  \n");
 		try {
 			
 			List<ExempleEntite> listeRetour = gestionExempleDao.listerEntitesSansParamsGen();
-			assertNotNull("Ajout de l'objet en success", listeRetour);
-			assertEquals(listeRetour.size(), ConstantesTest.VALEUR_3);
+			assertNotNull("Récupération d'une liste de taille : ", listeRetour);
+			assertEquals(listeRetour.size(), ConstantesTest.VALEUR_5);
 			setResultatsGeneralTests(resultatsGeneralTests + "\n   # Test :" + nomMethode + "\t OK ");
 		} catch (DAOException e) {
 			setResultatsGeneralTests(resultatsGeneralTests + "\n   # Test : " + nomMethode + " \t FAILED ");
@@ -104,13 +73,13 @@ public class GestionExempleDaoImplTest extends AbstractTest{
 	 */
 	@Test
 	public void testRechercheEntiteExempleParIdCasNominal(){
-		String nomMethode = "rechercheEntiteParIdGen";
+		String nomMethode = "testRechercheEntiteExempleParIdCasNominal";
         log.debug("\n\n---------- ### Test Debut : " + nomMethode + "  \n");
         
         try {
-			ExempleEntite  resultat = gestionExempleDao.rechercheEntiteParIdGen(ConstantesTest.ID_888111);
-			assertNotNull("Ajout de l'objet avec success", resultat);
-			assertEquals(ConstantesTest.ID_888111, resultat.getId());
+			ExempleEntite  resultat = gestionExempleDao.rechercheEntiteParIdGen(ConstantesTest.ID_888115);
+			assertNotNull("Recherche de l'entité est terminer avec success", resultat);
+			assertEquals(ConstantesTest.ID_888115, resultat.getId());
 			setResultatsGeneralTests(resultatsGeneralTests + "\n   # Test :" + nomMethode + "\t OK ");
 		} catch (DAOException e) {
 			setResultatsGeneralTests(resultatsGeneralTests + "\n   # Test : " + nomMethode + " \t FAILED ");
@@ -127,7 +96,7 @@ public class GestionExempleDaoImplTest extends AbstractTest{
 	 */
 	@Test
 	public void testRechercheEntiteExempleParIdCasErreur(){
-		String nomMethode = "rechercheEntiteParIdGen";
+		String nomMethode = "testRechercheEntiteExempleParIdCasErreur";
         log.debug("\n\n---------- ### Test Debut : " + nomMethode + "  \n");
         
 		//Retour
@@ -154,12 +123,14 @@ public class GestionExempleDaoImplTest extends AbstractTest{
 	 */
 	@Test
 	public void testAjouterEntiteCasNominal(){
-		LOGGER.debug("Debut de test de la methode persistance ajouterEntiteGen");
+		String nomMethode = "testAjouterEntiteCasNominal()";
+        log.debug("\n\n---------- ### Test Debut : " + nomMethode + "  \n");
+        
 		try {
-			ExempleEntite  resultat = gestionExempleDao.ajouterEntiteGen(getExempleEntite());
-			assertNotNull("Ajout de l'objet avec success", resultat);
+			gestionExempleDao.ajouterEntiteGen(getExempleEntite());
+			setResultatsGeneralTests(resultatsGeneralTests + "\n   # Test :" + nomMethode + "\t OK ");
 		} catch (DAOException e) {
-			Assert.fail(e.getMessage());
+			fail(e.getMessage());
 		}
 		
 		LOGGER.debug("Fin de test de la methode persistance ajouterEntiteGen");
@@ -172,39 +143,135 @@ public class GestionExempleDaoImplTest extends AbstractTest{
 	 */
 	@Test
 	public void testAjouterEntiteCasErreur(){
-		LOGGER.debug("Debut de test de la methode persistance ajouterEntiteGen");
-		ExempleEntite  resultat = null;
+		String nomMethode = "testAjouterEntiteCasErreur()";
+        log.debug("\n\n---------- ### Test Debut : " + nomMethode + "  \n");
+        
 		try {
-		    resultat = gestionExempleDao.ajouterEntiteGen(null);
+		     gestionExempleDao.ajouterEntiteGen(null);
 		    fail("Probléme de persistance de l'objet");
+		    setResultatsGeneralTests(resultatsGeneralTests + "\n   # Test :" + nomMethode + "\t OK ");
 		} catch (DAOException e) {
 			LOGGER.debug("Resultat Null a cause de ID = Null");
-			assertNull("Ajout de l'objet avec success", resultat);
 			assert(e.getMessage().contains("null"));
 		}
 		
 		LOGGER.debug("Fin de test de la methode persistance ajouterEntiteGen");
 	}
 	
+	/**
+	 * CAS NOMINAL.<br>
+	 * Test du service de recherche de l'entite par ID.<br>
+	 * RESULTAT : une liste non null.
+	 */
+	@Test
+	public void testMiseAjourCasNominal(){
+		String nomMethode = "testMiseAjourCasNominal()";
+	    log.debug("\n\n---------- ### Test Debut : " + nomMethode + "  \n");
+	    
+	    //Resultat 
+	    ExempleEntite resultat = null;
+		try {
+			resultat = gestionExempleDao.miseAJourEntiteGen(getExempleEntiteMAJ(), getExempleEntiteMAJ().getId());
+		    assertNotNull(resultat);
+		    setResultatsGeneralTests(resultatsGeneralTests + "\n   # Test :" + nomMethode + "\t OK ");
+		} catch (DAOException e) {
+			fail(e.getMessage());
+			setResultatsGeneralTests(resultatsGeneralTests + "\n   # Test :" + nomMethode + "\t Fail ");
+		}
+		
+		LOGGER.debug("Fin de test de la methode persistance ajouterEntiteGen");
+	}
+	/**
+	 * CAS NOMINAL.<br>
+	 * Test du service de supprimer de l'entite par ID.<br>
+	 * RESULTAT : TRUE.
+	 */
+	@Test
+	public void testSupprimerCasNominal(){
+		String nomMethode = "testSupprimerCasNominal()";
+        log.debug("\n\n---------- ### Test Debut : " + nomMethode + "  \n");
+        
+        try {
+			Boolean resultat = gestionExempleDao.supprimerEntite(ConstantesTest.ID_888111);
+			assertEquals(Boolean.TRUE, resultat);
+			setResultatsGeneralTests(resultatsGeneralTests + "\n   # Test :" + nomMethode + "\t OK ");
+		} catch (DAOException e) {
+			setResultatsGeneralTests(resultatsGeneralTests + "\n   # Test : " + nomMethode + " \t FAILED ");
+			fail("DAOException" +e.getMessage());
+		}
+		
+		LOGGER.debug("Fin de test de la methode persistance rechercheEntiteParIdGen");
+	}
+
+	/**
+	 * CAS ERROR.<br>
+	 * Test du service de supprimer de l'entite par ID.<br>
+	 * RESULTAT : FALSE.
+	 */
+	@Test
+	public void testSupprimerCasErreur(){
+		String nomMethode = "testSupprimerCasErreur()";
+        log.debug("\n\n---------- ### Test Debut : " + nomMethode + "  \n");
+        
+        try {
+			Boolean resultat = gestionExempleDao.supprimerEntite(null);
+			assertEquals(Boolean.FALSE, resultat);
+			fail("Probléme de persistance de l'objet");
+			setResultatsGeneralTests(resultatsGeneralTests + "\n   # Test :" + nomMethode + "\t OK ");
+		} catch (DAOException e) {
+			LOGGER.debug("Resultat FALSE a cause de ID = Null");
+			assert(e.getMessage().contains("null"));
+			setResultatsGeneralTests(resultatsGeneralTests + "\n   # Test : " + nomMethode + " \t FAILED ");
+		}
+		
+		LOGGER.debug("Fin de test de la methode persistance rechercheEntiteParIdGen");
+	}
+	
+	@Test
+	public void testRechercheEntiteParNamedQueryEtParIdGen(){
+		String nomMethode = "testRechercheEntiteParNamedQueryEtParIdGen()";
+        log.debug("\n\n---------- ### Test Debut : " + nomMethode + "  \n");
+        Map<String, Object> parametres = new HashMap<>();
+        parametres.put("id", ConstantesTest.ID_888111);
+        
+        try {
+			ExempleEntite resultat = gestionExempleDao.rechercheEntiteParNamedQueryEtParIdGen(Constantes.QUERY_FIND_ONE_ENTITY, parametres);
+			assertNotNull(resultat);
+			assertEquals(ConstantesTest.ID_888111, resultat.getId());
+			setResultatsGeneralTests(resultatsGeneralTests + "\n   # Test :" + nomMethode + "\t OK ");
+		} catch (DAOException e) {
+			LOGGER.debug("Resultat FALSE a cause de ID = Null");
+			fail("Probléme de persistance de l'objet");
+			assert(e.getMessage().contains("null"));
+			setResultatsGeneralTests(resultatsGeneralTests + "\n   # Test : " + nomMethode + " \t FAILED ");
+		}
+		
+		LOGGER.debug("Fin de test de la methode persistance rechercheEntiteParIdGen");
+	}
+	
 	//================== BOUCHON
+	
+	/**
+	 * Bouchon de l'entité ExempleEntite.
+	 * @return {@link ExempleEntite}
+	 */
 	private ExempleEntite getExempleEntite(){
 		ExempleEntite bouchon =  new ExempleEntite();
 		bouchon.setDate(new Date());
 		bouchon.setNom("Nom_test");
-		
 		return bouchon;
 	}
 	
 	/**
-	 * Un objet valeur Exemple.
-	 * @return l'objet Exemple
+	 * Bouchon de l'entité ExempleEntite.
+	 * @return {@link ExempleEntite}
 	 */
-	private ExempleVo getExempleVo(){
-		ExempleVo bouchon = new ExempleVo();
-		bouchon.setNom("Exemple_Test_1");
+	private ExempleEntite getExempleEntiteMAJ(){
+		ExempleEntite bouchon =  new ExempleEntite();
+		bouchon.setId(ConstantesTest.ID_888114);
 		bouchon.setDate(new Date());
+		bouchon.setNom("Nom_test");
 		return bouchon;
 	}
-	
 
 }

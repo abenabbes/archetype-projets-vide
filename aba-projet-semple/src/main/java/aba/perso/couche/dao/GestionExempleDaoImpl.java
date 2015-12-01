@@ -23,6 +23,6 @@ public class GestionExempleDaoImpl extends GenericPersoDAOImpl<ExempleEntite, Lo
 
 	//============= ATTRIBUTS
 	/** Logger */
-	private static Logger LOGGER = LoggerFactory.getLogger(GestionExempleDaoImpl.class);
+//	private static Logger LOGGER = LoggerFactory.getLogger(GestionExempleDaoImpl.class);
 
 }

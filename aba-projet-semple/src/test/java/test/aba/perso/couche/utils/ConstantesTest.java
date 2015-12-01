@@ -31,4 +31,16 @@ public interface ConstantesTest {
 	
 	/** Valeur 888111*/
 	static Long ID_888111 = 888111L;
+	
+	/** Valeur 888112*/
+	static Long ID_888112 = 888112L;
+	
+	/** Valeur 888113*/
+	static Long ID_888113 = 888113L;
+	
+	/** Valeur 888114*/
+	static Long ID_888114 = 888114L;
+	
+	/** Valeur 888115*/
+	static Long ID_888115 = 888115L;
 }
