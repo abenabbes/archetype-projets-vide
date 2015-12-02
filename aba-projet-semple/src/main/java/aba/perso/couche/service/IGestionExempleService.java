@@ -3,7 +3,6 @@ package aba.perso.couche.service;
 import java.util.List;
 
 
-import aba.perso.couche.entites.ExempleEntite;
 import aba.perso.couche.vo.ExempleVo;
 
 /**

@@ -5,14 +5,11 @@ package aba.perso.couche.service;
 
 import java.util.List;
 
-import org.apache.log4j.pattern.LogEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import aba.perso.couche.entites.ExempleEntite;
 import aba.perso.couche.metier.IGestionExempleMetier;
 import aba.perso.couche.vo.ExempleVo;
 
