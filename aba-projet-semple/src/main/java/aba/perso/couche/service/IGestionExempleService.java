@@ -17,13 +17,19 @@ public interface IGestionExempleService {
 	/**
 	 * Methode service de mise à jour de l'objet.<br>
 	 * @param exemple l'objet
-	 * @return un objet exemple
 	 */
-	ExempleEntite ajouterExemple(ExempleVo exemple);
+	void ajouterExemple(ExempleVo exemple);
 	
 	/**
 	 * Methode service pour lister tous les objets exemple existants.
 	 * @return une liste de l'objet Exemple.
 	 */
-	List<ExempleEntite> rechercherTous();
+	List<ExempleVo> rechercherTous();
+	
+	/**
+	 * Methode service de mise à jour de l'objet.<br>
+	 * @param exemple l'objet
+	 * @return un objet exemple
+	 */
+	ExempleVo miseAJourExemple(ExempleVo exempleVo);
 }

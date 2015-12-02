@@ -11,5 +11,6 @@
  
  	<!-- Import de la datasource -->
  	<import resource="classpath:springTest/test-datasource-context.xml"/>
- 
+ 	<!-- Import des autres beans -->
+ 	<import resource="classpath*:spring/beansContext.xml"/>
 </beans>

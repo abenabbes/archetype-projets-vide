@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,7 +58,7 @@ public class GestionExempleDaoImplTest extends AbstractTest{
 			
 			List<ExempleEntite> listeRetour = gestionExempleDao.listerEntitesSansParamsGen();
 			assertNotNull("Récupération d'une liste de taille : ", listeRetour);
-			assertEquals(listeRetour.size(), ConstantesTest.VALEUR_5);
+			assertEquals(listeRetour.size(), ConstantesTest.VALEUR_6);
 			setResultatsGeneralTests(resultatsGeneralTests + "\n   # Test :" + nomMethode + "\t OK ");
 		} catch (DAOException e) {
 			setResultatsGeneralTests(resultatsGeneralTests + "\n   # Test : " + nomMethode + " \t FAILED ");

@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
 import test.aba.perso.couche.utils.AbstractTest;
+import test.aba.perso.couche.utils.ConstantesTest;
 import aba.perso.couche.dao.GestionExempleDaoImpl;
 import aba.perso.couche.entites.ExempleEntite;
 import aba.perso.couche.service.IGestionExempleService;
@@ -28,7 +29,6 @@ import aba.perso.couche.vo.ExempleVo;
  *
  */
 @ContextConfiguration(locations={ "classpath*:springTest/test-application-context.xml" })
-@Ignore
 public class GestionExempleServiceTest extends AbstractTest{
 
 	//============= ATTRIBUTS
@@ -50,10 +50,7 @@ public class GestionExempleServiceTest extends AbstractTest{
 	@Test
 	public void testAjouterExempleCasNominal(){
 		LOGGER.debug("Debut de test de la methode persistance jouterExemple");
-		
-		ExempleEntite exempleResult = gestionExempleService.ajouterExemple(getExempleVo());
-		assertNotNull("Ajout de l'objet en success", exempleResult);
-		
+		 gestionExempleService.ajouterExemple(getExempleVo());
 		LOGGER.debug("Fin de test de la methode persistance jouterExemple");
 		
 	}
@@ -67,9 +64,20 @@ public class GestionExempleServiceTest extends AbstractTest{
 	public void testRechercherTousCasNominal(){
 		LOGGER.debug("Debut de test de la methode persistance rechercherTous");
 		
-		List<ExempleEntite> result = gestionExempleService.rechercherTous();
+		List<ExempleVo> result = gestionExempleService.rechercherTous();
 		assertNotNull(result);
-		assertEquals(2, result.size());
+		assertEquals(ConstantesTest.VALEUR_5, result.size());
+		
+		LOGGER.debug("Fin de test de la methode persistance rechercherTous");
+		
+	}
+	
+	@Test
+	public void testMiseAjourCasNominal(){
+		LOGGER.debug("Debut de test de la methode testMiseAjourCasNominal");
+		
+		ExempleVo result = gestionExempleService.miseAJourExemple(getExempleVoById(ConstantesTest.ID_888116));
+		assertNotNull(result);
 		
 		LOGGER.debug("Fin de test de la methode persistance rechercherTous");
 		
@@ -83,6 +91,18 @@ public class GestionExempleServiceTest extends AbstractTest{
 	 */
 	private ExempleVo getExempleVo(){
 		ExempleVo bouchon = new ExempleVo();
+		bouchon.setNom("Exemple_Test_1");
+		bouchon.setDate(new Date());
+		return bouchon;
+	}
+	
+	/**
+	 * Un objet valeur Exemple.
+	 * @return l'objet Exemple
+	 */
+	private ExempleVo getExempleVoById(final Long id){
+		ExempleVo bouchon = new ExempleVo();
+		bouchon.setId(id);
 		bouchon.setNom("Exemple_Test_1");
 		bouchon.setDate(new Date());
 		return bouchon;

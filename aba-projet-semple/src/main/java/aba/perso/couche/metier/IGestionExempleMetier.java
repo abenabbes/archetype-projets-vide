@@ -17,19 +17,18 @@ import aba.perso.couche.vo.ExempleVo;
 public interface IGestionExempleMetier {
 
 	
-	//--------------------------FIN NOV
 	/**
 	 * Methode service de mise à jour de l'objet.<br>
 	 * @param exemple l'objet
 	 * @return un objet exemple
 	 */
-	ExempleEntite miseAJourExemple(ExempleVo exemple);
+	ExempleVo miseAJourExemple(ExempleVo exemple);
 	
 	/**
 	 * Methode service pour lister tous les objets exemple existants.
 	 * @return une liste de l'objet Exemple.
 	 */
-	List<ExempleEntite> rechercherTous();
+	List<ExempleVo> listerTousExemple();
 	
 	/**
 	 * Methode service d'ajout d'un objet dans la base de données.<br>
@@ -37,14 +36,6 @@ public interface IGestionExempleMetier {
 	 * @param exemple l'objet
 	 * @return un objet exemple
 	 */
-	ExempleEntite ajouterExemple(ExempleVo exemple);
-	
-	/**
-	   * Recherche de l'ensemble des entités
-	   *
-	   * @return Liste d'entités
-	   */
-	 public List<ExempleEntite> listerToutesEntite();
-	
+	void ajouterExemple(ExempleVo exemple);
 	
 }
